@@ -8,10 +8,9 @@ from nltk.classify import NaiveBayesClassifier
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.classify.api import ClassifierI
 import random
-# nltk.download('punkt_tab')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
-# TODO uncomment these in final submission
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 class ConfusionMatrix:
     def __init__(self,predictions,goldstandard,classes=(1,0)):
@@ -120,7 +119,7 @@ print("Normalisation produced a {0:.2f}% reduction in vocabulary size from {1} t
     100*(raw_vocab_size - normalised_vocab_size)/raw_vocab_size, raw_vocab_size, normalised_vocab_size))
 
 # Split the training data into training and testing data, so we can evaluate the test data with its labels
-def split_data(data, ratio=0.7): # when the second argument is not given, it defaults to 0.7
+def split_data(data, ratio=0.7):
     """
     Given collection of items and ratio:
      - partitions the collection into training and testing, where the proportion in training is ratio,
@@ -191,7 +190,7 @@ train_data_freq_dist = [(FreqDist(normalise(word_tokenize(text))), label) for te
 # Convert testing data into a frequency distribution (no labels given for testing)
 test_data_freq_dist = [FreqDist(normalise(word_tokenize(text))) for text in test_text]
 
-# Use a Naive Bayes classification technique with NLTK for final predictions on all test data
+# Use the Naive Bayes classification technique with NLTK for final predictions on all test data
 naive_bayes_classifier = NaiveBayesClassifier.train(train_data_freq_dist)
 
 # all docs
@@ -199,12 +198,11 @@ predictions = naive_bayes_classifier.classify_many(doc for doc in test_data_freq
 predictions = [int(pred) for pred in predictions] # converting from np.int64() to int
 print(predictions)
 
-# a single doc (custom string example) REMOVE this later, probably not needed
+# a single doc (custom string example) 
 prediction = naive_bayes_classifier.classify(FreqDist(normalise(word_tokenize("thank you for your email."))))
 print(prediction)
 
-naive_bayes_classifier.show_most_informative_features(20)
-# TODO graph or table this in report
+naive_bayes_classifier.show_most_informative_features(10)
 
 # Save prediction labels to a csv file
 def save_as_csv(pred_labels, location = '.'):
@@ -216,4 +214,4 @@ def save_as_csv(pred_labels, location = '.'):
     assert pred_labels.shape[0]==1552, 'wrong number of labels, should be 1552 test labels'
     np.savetxt(location + '/results_task1.csv', pred_labels, delimiter=',')
 
-save_as_csv(np.array(predictions)) # TODO turn into clean ints
+save_as_csv(np.array(predictions))
