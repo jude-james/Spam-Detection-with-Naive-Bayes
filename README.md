@@ -2,7 +2,7 @@
 
 ## Overview
 
-Part 1 of my Applied Machine Learning module, where I designed, built, tested and analysed a spam detection system. For a comprehensive overview [view the full report.](./Report.pdf)
+Part 1 of my Applied Machine Learning submission, where I designed, built, tested and analysed a spam detection system. For a comprehensive overview [view the full report.](./Report.pdf)
 
 ## How to Run
 
